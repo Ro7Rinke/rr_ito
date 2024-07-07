@@ -6,5 +6,6 @@ urlpatterns = [
     path('login/', views.user_login, name='login'),
     path('send_password_reset_email/', views.send_password_reset_email_view, name='send_password_reset_email'),
     path('reset_password/<str:token>/', views.reset_password_view, name='reset_password'),
+    path('', views.home_view, name='home'),
 ]
 from users.models import User

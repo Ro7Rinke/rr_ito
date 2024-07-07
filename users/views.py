@@ -8,6 +8,7 @@ from django.contrib.auth.models import User
 from django.utils.crypto import get_random_string
 from .models import User, PasswordResetToken
 from django.contrib.auth.hashers import make_password
+from django.contrib.auth.decorators import login_required
 
 def register(request):
     if request.method == 'POST':
@@ -31,7 +32,7 @@ def user_login(request):
             if user is not None:
                 login(request, user)
                 messages.success(request, f'Bem-vindo, {username}!')
-                return redirect('dashboard')  # Redireciona para a página de dashboard após o login
+                return redirect('home')  # Redireciona para a página de dashboard após o login
             else:
                 messages.error(request, 'Credenciais inválidas. Por favor, tente novamente.')
     else:
@@ -67,3 +68,14 @@ def reset_password_view(request, token):
         return redirect('login')
     return render(request, 'users/reset_password_form.html', {'token': token})
 
+@login_required
+def home_view(request):
+    user = request.user
+    session_id = request.session.session_key
+    context = {
+        'user_id': user.id,
+        'username': user.username,
+        'email': user.email,
+        'session_id': session_id,
+    }
+    return render(request, 'users/home.html', context)

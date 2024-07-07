@@ -53,6 +53,12 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
+# Session settings
+SESSION_ENGINE = 'django.contrib.sessions.backends.db'  # Armazena sessões no banco de dados
+SESSION_COOKIE_NAME = 'sessionid'
+SESSION_COOKIE_AGE = 1209600  # 2 semanas
+SESSION_SAVE_EVERY_REQUEST = True  # Salva a sessão a cada requisição
+
 ROOT_URLCONF = 'rr_ito.urls'
 
 TEMPLATES = [
@@ -109,6 +115,8 @@ AUTH_PASSWORD_VALIDATORS = [
 
 AUTH_USER_MODEL = 'users.User'
 
+LOGIN_URL = '/users/login/'
+LOGIN_REDIRECT_URL = 'home'
 
 # Internationalization
 # https://docs.djangoproject.com/en/5.0/topics/i18n/
